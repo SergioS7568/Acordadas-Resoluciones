@@ -1,0 +1,6 @@
+.TW_HeaderStyle {
+  @apply flex flex-col md:flex-row  justify-center items-center md:justify-between md:items-center  text-center  text-lg font-bold;
+}
+.TW_HeaderImageProperties {
+  @apply max-h-80 max-w-96;
+}
