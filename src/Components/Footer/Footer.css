@@ -1,0 +1,11 @@
+.TW_FooterStyle {
+  @apply justify-items-center m-4;
+}
+
+.TW_FooterLabelProperties {
+  @apply text-center text-lg font-semibold;
+}
+
+.TW_FooterLabelVersionProperties {
+  @apply text-lg font-semibold text-center;
+}
