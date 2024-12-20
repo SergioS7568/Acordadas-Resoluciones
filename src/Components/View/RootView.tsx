@@ -1,11 +1,13 @@
 import Footer from "../Footer/Footer";
+import Forms from "../Forms/Forms";
 import Header from "../Header/Header";
 
 const RootView = () => {
   return (
     <div>
       <Header></Header>
-      RootView
+
+      <Forms></Forms>
       <Footer></Footer>
     </div>
   );
