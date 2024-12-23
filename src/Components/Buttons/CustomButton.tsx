@@ -1,12 +1,5 @@
 import { UseFormRegister, UseFormReset } from "react-hook-form";
-
-interface DataType {
-  number: string | null;
-  "init-date": Date | null;
-  "final-day": Date | null;
-  text: string | null;
-  type: string | null;
-}
+import { DataType } from "../../Lib/getAgreements";
 
 interface Props {
   action: string;

@@ -1,3 +1,4 @@
+import Table from "../Body/Table/Table";
 import Footer from "../Footer/Footer";
 import Forms from "../Forms/Forms";
 import Header from "../Header/Header";
@@ -5,10 +6,11 @@ import Header from "../Header/Header";
 const RootView = () => {
   return (
     <div>
-      <Header></Header>
+      <Header />
 
-      <Forms></Forms>
-      <Footer></Footer>
+      <Forms />
+      <Table />
+      <Footer />
     </div>
   );
 };
