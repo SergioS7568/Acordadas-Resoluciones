@@ -3,7 +3,11 @@ import containerQuery from "@tailwindcss/container-queries";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,css}"],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "569px",
+      },
+    },
   },
 
   plugins: [containerQuery, require("daisyui")],

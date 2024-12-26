@@ -1,12 +1,16 @@
+import Table from "../Body/Table/Table";
 import Footer from "../Footer/Footer";
+import Forms from "../Forms/Forms";
 import Header from "../Header/Header";
 
 const RootView = () => {
   return (
     <div>
-      <Header></Header>
-      RootView
-      <Footer></Footer>
+      <Header />
+
+      <Forms />
+      <Table />
+      <Footer />
     </div>
   );
 };
