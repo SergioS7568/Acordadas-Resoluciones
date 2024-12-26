@@ -38,7 +38,7 @@ const Filters = () => {
     <form onSubmit={handleSubmit(handleOnSubmit)}>
       <div className=" flex flex-col md:flex-row justify-center items-center gap-4 ">
         <div className="flex flex-col    text-sm font-medium  ">
-          <span>numero</span>
+          <label>numero</label>
           <input
             className="input outline w-96 md:w-60 "
             id="Numero"
@@ -48,7 +48,7 @@ const Filters = () => {
         </div>
         <div className=" flex flex-row gap-4">
           <div className="flex flex-col    text-sm font-medium  ">
-            <span>Fecha Inicial</span>
+            <label>Fecha Inicial</label>
             <input
               className="input outline   w-60"
               type="date"
@@ -58,7 +58,7 @@ const Filters = () => {
             />
           </div>
           <div className="flex flex-col    text-sm font-medium  ">
-            <span>Fecha Final</span>
+            <label>Fecha Final</label>
             <input
               className="input outline   w-60 "
               type="date"
@@ -72,7 +72,7 @@ const Filters = () => {
 
       <div className="flex flex-row justify-center gap-4">
         <div className="flex flex-col    text-sm font-medium  ">
-          <span>Texto</span>
+          <label>Texto</label>
           <input
             className="input outline  w-60 "
             id="Texto"
@@ -82,7 +82,7 @@ const Filters = () => {
           />
         </div>
         <div className="flex flex-col    text-sm font-medium  ">
-          <span>Tipo</span>
+          <label>Tipo</label>
           <input
             list="type-select-options"
             className="select outline w-60"
