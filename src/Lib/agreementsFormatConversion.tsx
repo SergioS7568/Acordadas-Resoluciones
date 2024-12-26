@@ -27,7 +27,7 @@ export interface TypeAgreement {
   description: string;
 }
 
-export type Code = "A";
+export type Code = "A" | "RF" | "R";
 
 export type Description = "ACORDADAS";
 

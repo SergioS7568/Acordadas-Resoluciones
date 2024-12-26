@@ -10,11 +10,7 @@ const Table = () => {
   const newPageSize = useDataType((state) => state.pageSize);
   const UpdatePageSize = useDataType((state) => state.updatePageSize);
 
-  const {
-    data: ApiUser,
-    isError,
-    isLoading,
-  } = useQuery({
+  const { data: ApiUser } = useQuery({
     queryKey: [storedData, newPageSize],
     queryFn: (context) => {
       const queryKey = context.queryKey as [DataType, number];
@@ -23,7 +19,6 @@ const Table = () => {
   });
 
   const handleUpdatePageSize = (text: string) => {
-    // console.log("text  ", text);
     UpdatePageSize(parseInt(text));
   };
 
