@@ -84,14 +84,14 @@ const Filters = () => {
         <div className="flex flex-col    text-sm font-medium  ">
           <span>Tipo</span>
           <input
-            list="tipo-options"
+            list="type-select-options"
             className="select outline w-60"
             id="Tipo"
             typeof="string"
             placeholder="Tipo"
             {...register("type")}
           />
-          <datalist id="tipo-options">
+          <datalist id="type-select-options">
             <option value="ACORDADA" />
             <option value="RESOLUCION" />
             <option value="RESOLUCION DE FERIA" />

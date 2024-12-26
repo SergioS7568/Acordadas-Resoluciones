@@ -1,12 +1,13 @@
 import "./Header.css";
+import logo from "../../Assets/logo-corte.png";
+
 const Header = () => {
-  const imageLogoURL =
-    "https://acordadas.justucuman.gov.ar/img/logos/logo-corte.png";
+  // const imageLogoURL = "logo";
   const modName = "Acordadas y Resoluciones";
   return (
     <div>
       <label className="TW_HeaderStyle">
-        <img src={imageLogoURL} className="TW_HeaderImageProperties" />
+        <img src={logo} className="TW_HeaderImageProperties" />
         {modName}
       </label>
     </div>
