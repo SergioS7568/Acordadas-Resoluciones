@@ -1,10 +1,6 @@
 import Filters from "../Body/Filters/Filters";
 
 const Forms = () => {
-  return (
-    <div>
-      <Filters></Filters>
-    </div>
-  );
+  return <Filters></Filters>;
 };
 export default Forms;
