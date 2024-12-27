@@ -47,6 +47,19 @@ export const validation = (props: Props): boolean => {
     }
   }
 
+  if (
+    dataSniffed.type &&
+    dataSniffed.type.trim() &&
+    !(
+      dataSniffed.text ||
+      dataSniffed.number ||
+      (dataSniffed["final-day"] && dataSniffed["init-date"])
+    )
+  ) {
+    alert("please fill another input");
+    return false;
+  }
+
   if (!result.success) {
     console.log("Validation failed:", result.error.format());
     return false;
