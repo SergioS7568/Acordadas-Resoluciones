@@ -1,8 +1,12 @@
 import { agreementDetailFormatConversion } from "./agreementDetailFormatConversion";
 import { agreementsFormatConversion } from "./agreementsFormatConversion";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_ACORDADAS;
-const BACKEND_URL_ID = import.meta.env.VITE_BACKEND_URL_ACORDADAS_ID;
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_ACORDADAS;
+
+// const BACKEND_URL_ID = import.meta.env.VITE_BACKEND_URL_ACORDADAS_ID;
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_REALDEAL_ACORDADAS;
+const BACKEND_URL_ID = import.meta.env.VITE_BACKEND_URL_REALDEAL_ACORDADAS_ID;
 
 export interface DataType {
   number: string | null;
@@ -48,6 +52,10 @@ export const getUsersInfoFilter = async (
       } else {
         wantedNumber += `1${fowardSlash[0]}`;
       }
+      return wantedNumber;
+    }
+    if (fowardSlash && fowardSlash[0].toString().trim().length == 4) {
+      wantedNumber += `${fowardSlash[0]}`;
       return wantedNumber;
     }
   };
