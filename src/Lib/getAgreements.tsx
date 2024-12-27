@@ -1,6 +1,8 @@
+import { agreementDetailFormatConversion } from "./agreementDetailFormatConversion";
 import { agreementsFormatConversion } from "./agreementsFormatConversion";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_ACORDADAS;
+const BACKEND_URL_ID = import.meta.env.VITE_BACKEND_URL_ACORDADAS_ID;
 
 export interface DataType {
   number: string | null;
@@ -129,3 +131,22 @@ export const getUsersInfoFilter = async (
 };
 
 export default getUsersInfoFilter;
+
+export const getTextInfo = async (queryKey: [id: number]) => {
+  const [id] = queryKey;
+
+  const urlAcordadas = `${BACKEND_URL_ID}${id}`;
+  console.log("urlAcordadas   descripcion ", urlAcordadas);
+
+  const resultado = await fetch(urlAcordadas);
+
+  if (!resultado.ok) {
+    throw new Error("An error happened when fetching new data ");
+  }
+
+  const data = await resultado.json();
+
+  const newData = agreementDetailFormatConversion(data.data);
+
+  return newData;
+};

@@ -12,9 +12,9 @@ export interface Data {
   agreement_description: string;
   agreement_text: string;
   file_number: string;
-  record_list: any[];
+  record_list: [];
   signature_list: SignatureList[];
-  attach_list: any[];
+  attach_list: [];
   type_agreement: TypeAgreement;
 }
 
@@ -37,8 +37,6 @@ export interface DetailsWantedFormat {
   file_number: string;
 
   signature_list: { description: string }[];
-
-  type_agreement: { code: string; description: string };
 }
 
 export const agreementDetailFormatConversion = (
@@ -56,10 +54,5 @@ export const agreementDetailFormatConversion = (
     signature_list: data.signature_list.map((result) => ({
       description: result.description,
     })),
-
-    type_agreement: {
-      code: data.type_agreement.code,
-      description: data.type_agreement.description,
-    },
   };
 };
