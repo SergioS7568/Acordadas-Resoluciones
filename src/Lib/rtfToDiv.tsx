@@ -77,4 +77,5 @@ const rtfToDiv = async (rtfText: string, query: string): Promise<string> => {
 
   return div.innerHTML;
 };
+
 export default rtfToDiv;
