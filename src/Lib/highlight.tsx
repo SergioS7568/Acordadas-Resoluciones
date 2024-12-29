@@ -1,6 +1,6 @@
 const highlight = (content, query) => {
-  console.log("content- ", content, "   -typeof-  ", typeof content);
-  console.log("query- ", query, "   -typeof-  ", typeof query);
+  // console.log("content- ", content, "   -typeof-  ", typeof content);
+  // console.log("query- ", query, "   -typeof-  ", typeof query);
 
   if (!query || !query.trim()) {
     return content;
