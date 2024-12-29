@@ -19,13 +19,9 @@ const Modal = (props: Props) => {
     props.toggleModal();
   };
 
-  const currentIndex = useDataType((state) => state.queryIndex);
-  const setQueryIndex = useDataType((state) => state.updateQueryIndex);
-
   const currentID = useDataType((state) => state.agreementID);
-  const setIDSearch = useDataType((state) => state.updateAgreementID);
 
-  const currentIdList = useDataType((state) => state.agreementIDList);
+  const storedData = useDataType((state) => state.data);
 
   const [parsedText, setParsedText] = useState<string>("");
 
@@ -42,27 +38,17 @@ const Modal = (props: Props) => {
     enabled: !!currentID,
   });
 
-  const handleIdSelection = (position: number) => {
-    console.log("position,   ", position);
-    console.log("currentIdList,   ", currentIdList);
-    console.log("currentID,   ", currentID);
-    console.log("currentIndex,   ", currentIndex);
-    console.log("currentIdList + position   ", currentIdList[position]);
-    setQueryIndex(position);
-    setIDSearch(currentIdList[position]);
-  };
-
   useEffect(() => {
     const rtfToDivHandler = async () => {
-      if (agreementInformation?.agreement_text) {
+      if (agreementInformation?.agreement_text && storedData.text) {
         try {
           const htmlContent = await rtfToDiv(
             agreementInformation.agreement_text,
-            "Poder"
+            storedData.text
           );
           // If rtfToDiv isn't working as expected, you could try rtf.js instead:
           // const htmlContent = parseRtf(agreementInformation.agreement_text);
-          const highlightedText = highlight(htmlContent, "Poder");
+          const highlightedText = highlight(htmlContent, storedData.text);
           // console.log("Parsed Text:", highlightedText);
           setParsedText(highlightedText);
         } catch (error) {
@@ -78,34 +64,47 @@ const Modal = (props: Props) => {
       {props.isOpen && (
         <div className=" modal-overlay backdrop-blur-sm transition-opacity duration-100 ease-in-out">
           <div className="modal-box  transition-transform duration-1000 ease-in-out transform">
-            <h1> MODAL</h1>
-            <button className="btn btn-circle">Exit</button>
-            <button
-              className="btn btn-square bg-blue-300"
-              onClick={handleClickExit}
-            >
-              click me
-            </button>
-            <p>{agreementInformation?.agreement_date.toString()}</p>
-            <p>{agreementInformation?.agreement_description}</p>
-            <p>{agreementInformation?.agreement_number}</p>
-
-            <div></div>
-            <p>{agreementInformation?.agreement_year}</p>
-            <p>{agreementInformation?.file_number}</p>
-            <p>{agreementInformation?.id}</p>
-            {agreementInformation?.signature_list.map(
-              (firms, index: number) => {
-                return (
-                  <div key={index}>
-                    <p>{firms.description}</p>
-                  </div>
-                );
-              }
-            )}
+            <div>
+              <h1> Acordada/Resolución seleccionada</h1>
+              <button
+                className="btn btn-square bg-blue-300"
+                onClick={handleClickExit}
+              >
+                exit X
+              </button>
+            </div>
+            <div>
+              <p>
+                Número:
+                {agreementInformation?.agreement_number}/
+                {agreementInformation?.agreement_year}
+              </p>
+              <p>Fecha: {agreementInformation?.agreement_date.toString()}</p>
+            </div>
 
             {parsedText && (
               <div dangerouslySetInnerHTML={{ __html: parsedText }} />
+            )}
+            <p>
+              ACORDADA SUSCRIPTA Y REGISTRADA POR EL/LA ACTUARIO/A FIRMANTE EN
+              LA PROVINCIA DE TUCUMAN, EN LA FECHA INDICADA EN LA CONSTANCIA DE
+              LA REFERIDA FIRMA DIGITAL DE QUIEN SUSCRIBE.- SA
+            </p>
+            <p>
+              Firmado en fecha:{" "}
+              {agreementInformation?.agreement_date.toString()}{" "}
+            </p>
+            {agreementInformation?.signature_list &&
+            agreementInformation.signature_list.length > 0 ? (
+              agreementInformation.signature_list.map(
+                (firms, index: number) => (
+                  <div key={index} className="signature-item">
+                    <p>1 {firms.description} 1</p>
+                  </div>
+                )
+              )
+            ) : (
+              <p>No signatures available.</p>
             )}
 
             <PageNavigationButtonsModal />

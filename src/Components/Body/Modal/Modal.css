@@ -27,3 +27,45 @@
   overflow-y: auto;
   border-radius: 1rem;
 }
+
+.signature-item {
+  border: 1px solid red; /* Just for debugging */
+  background-color: yellow; /* Just for debugging */
+}
+
+/* Barcode */
+
+.CCode {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Libre Barcode 39", cursive !important;
+  font-size: 50px !important;
+  background: none;
+  border: none;
+  margin-bottom: -30px;
+}
+
+.Contenido p span[style] .Ccode {
+  font-size: 50px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .CCode {
+    font-size: 40px !important;
+  }
+}
+
+/* Search highlight */
+
+.text-highlight {
+  background-color: #ffff00;
+  color: #3f3f3f;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0 2px;
+}
