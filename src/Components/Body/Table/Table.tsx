@@ -36,6 +36,17 @@ const Table = () => {
     queryKey: [storedData, newPageSize, indexPage],
     queryFn: (context) => {
       const queryKey = context.queryKey as [DataType, number, number];
+      if (
+        !storedData ||
+        (!storedData.number &&
+          !storedData.text &&
+          !storedData["final-day"] &&
+          !storedData["init-date"]) ||
+        (!storedData["final-day"] && storedData["init-date"]) ||
+        (storedData["final-day"] && !storedData["init-date"])
+      ) {
+        return Promise.resolve(null);
+      }
       return getUsersInfoFilter(queryKey);
     },
   });
@@ -113,24 +124,26 @@ const Table = () => {
         </p>
       ) : (
         <div>
-          <p>
-            Acordada(s)/Resolucion(es) encontrada(s):
-            {ApiUser?.contentFormat.max_size}
-          </p>
-          <div className="flex flex-row">
-            <p>Mostar</p>
-            <select
-              className="select outline"
-              id="Select-PageSize"
-              value={newPageSize}
-              onChange={(e) => {
-                handleUpdatePageSize(e.currentTarget.value);
-              }}
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
+          <div className="flex flex-col md:flex-row items-center md:justify-between">
+            <p>
+              Acordada(s)/Resolucion(es) encontrada(s):
+              {ApiUser?.contentFormat.max_size}
+            </p>
+            <div className="flex flex-row gap-4">
+              <p>Mostar</p>
+              <select
+                className="select outline"
+                id="Select-PageSize"
+                value={newPageSize}
+                onChange={(e) => {
+                  handleUpdatePageSize(e.currentTarget.value);
+                }}
+              >
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </div>
           </div>
           <table className="max-sm:hidden max-md:hidden mt-2 pt-4 pb-2 block...">
             <thead>

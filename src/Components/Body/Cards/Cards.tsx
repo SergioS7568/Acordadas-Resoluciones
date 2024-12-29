@@ -2,7 +2,7 @@ import { AgreementWantedFormat } from "../../../Lib/agreementsFormatConversion";
 import Grid from "../../../Lib/Grid";
 
 interface Props {
-  ApiUser: AgreementWantedFormat | undefined;
+  ApiUser: AgreementWantedFormat | undefined | null;
   HandleButtonPress: (id: number, index: number) => void;
 }
 
