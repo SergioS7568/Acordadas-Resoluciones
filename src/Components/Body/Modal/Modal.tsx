@@ -1,42 +1,60 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import rtf from "rtf.js";
 
 import "./Modal.css";
 
 import { getTextInfo } from "../../../Lib/getAgreements";
 import highlight from "../../../Lib/highlight";
 import rtfToDiv from "../../../Lib/rtfToDiv";
+import { useDataType } from "../../../store";
+import PageNavigationButtonsModal from "../../PageNavigationButtons/PageNavigationButtonsModal";
 
 interface Props {
   isOpen: boolean;
   toggleModal: () => void;
-  id: number | undefined;
 }
 
 const Modal = (props: Props) => {
-  const { id } = props;
-
   const handleClickExit = () => {
     props.toggleModal();
   };
 
+  const currentIndex = useDataType((state) => state.queryIndex);
+  const setQueryIndex = useDataType((state) => state.updateQueryIndex);
+
+  const currentID = useDataType((state) => state.agreementID);
+  const setIDSearch = useDataType((state) => state.updateAgreementID);
+
+  const currentIdList = useDataType((state) => state.agreementIDList);
+
+  const [parsedText, setParsedText] = useState<string>("");
+
+  useEffect(() => {
+    console.log("currentID-- ", currentID);
+  }, [currentID]);
+
   const { data: agreementInformation } = useQuery({
-    queryKey: [id],
+    queryKey: [currentID],
     queryFn: (context) => {
       const queryKey = context.queryKey as [number];
       return getTextInfo(queryKey);
     },
-    enabled: !!id,
+    enabled: !!currentID,
   });
 
-  const [flagLoad, setFlagLoad] = useState<boolean>(false);
-  const [parsedText, setParsedText] = useState<string>("");
+  const handleIdSelection = (position: number) => {
+    console.log("position,   ", position);
+    console.log("currentIdList,   ", currentIdList);
+    console.log("currentID,   ", currentID);
+    console.log("currentIndex,   ", currentIndex);
+    console.log("currentIdList + position   ", currentIdList[position]);
+    setQueryIndex(position);
+    setIDSearch(currentIdList[position]);
+  };
 
   useEffect(() => {
     const rtfToDivHandler = async () => {
       if (agreementInformation?.agreement_text) {
-        setFlagLoad(true);
         try {
           const htmlContent = await rtfToDiv(
             agreementInformation.agreement_text,
@@ -45,12 +63,10 @@ const Modal = (props: Props) => {
           // If rtfToDiv isn't working as expected, you could try rtf.js instead:
           // const htmlContent = parseRtf(agreementInformation.agreement_text);
           const highlightedText = highlight(htmlContent, "Poder");
-          console.log("Parsed Text:", highlightedText);
+          // console.log("Parsed Text:", highlightedText);
           setParsedText(highlightedText);
         } catch (error) {
           alert(error);
-        } finally {
-          setFlagLoad(false);
         }
       }
     };
@@ -73,7 +89,7 @@ const Modal = (props: Props) => {
             <p>{agreementInformation?.agreement_date.toString()}</p>
             <p>{agreementInformation?.agreement_description}</p>
             <p>{agreementInformation?.agreement_number}</p>
-            <p>{agreementInformation?.agreement_text}</p>
+
             <div></div>
             <p>{agreementInformation?.agreement_year}</p>
             <p>{agreementInformation?.file_number}</p>
@@ -91,9 +107,8 @@ const Modal = (props: Props) => {
             {parsedText && (
               <div dangerouslySetInnerHTML={{ __html: parsedText }} />
             )}
-            <button className="btn btn-circle">list</button>
-            <button className="btn btn-circle">left</button>
-            <button className="btn btn-circle">right</button>
+
+            <PageNavigationButtonsModal />
           </div>
         </div>
       )}
