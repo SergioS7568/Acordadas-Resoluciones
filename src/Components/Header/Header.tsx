@@ -2,7 +2,6 @@ import "./Header.css";
 import logo from "../../Assets/logo-corte.png";
 
 const Header = () => {
-  // const imageLogoURL = "logo";
   const modName = "Acordadas y Resoluciones";
   return (
     <div>
