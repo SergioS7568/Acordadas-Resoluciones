@@ -2,39 +2,61 @@ import { useQuery } from "@tanstack/react-query";
 import { useDataType } from "../../../store";
 import { DataType } from "../Filters/Filters";
 
-import getUsersInfoFilter, { getTextInfo } from "../../../Lib/getAgreements";
+import getUsersInfoFilter from "../../../Lib/getAgreements";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
-import { number } from "zod";
+
+import PageNavigationButtonsBottom from "../../PageNavigationButtons/PageNavigationButtonsBottom";
+import Cards from "../Cards/Cards";
 
 const Table = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [idAgreement, setIdAgreement] = useState<number>();
   const storedData = useDataType((state) => state.data);
 
   const newPageSize = useDataType((state) => state.pageSize);
   const UpdatePageSize = useDataType((state) => state.updatePageSize);
+
+  const currentIndex = useDataType((state) => state.queryIndex);
+  const setQueryIndex = useDataType((state) => state.updateQueryIndex);
+
+  const setPageIndex = useDataType((state) => state.updatePageIndex);
+  const indexPage = useDataType((state) => state.pageIndex);
+
+  // const currentID = useDataType((state) => state.agreementID);
+  const setIDSearch = useDataType((state) => state.updateAgreementID);
+
+  // const currentIdList = useDataType((state) => state.agreementIDList);
+  const setIdList = useDataType((state) => state.updateIdList);
 
   const {
     data: ApiUser,
     isError,
     isLoading,
   } = useQuery({
-    queryKey: [storedData, newPageSize],
+    queryKey: [storedData, newPageSize, indexPage],
     queryFn: (context) => {
-      const queryKey = context.queryKey as [DataType, number];
+      const queryKey = context.queryKey as [DataType, number, number];
       return getUsersInfoFilter(queryKey);
     },
   });
 
   const handleUpdatePageSize = (text: string) => {
     UpdatePageSize(parseInt(text));
+    setPageIndex(0);
   };
 
   const HandleButtonPress = (id: number, index: number) => {
-    console.log(" el id es ", id);
-    console.log("el index es ", index);
-    setIdAgreement(id);
+    console.log("  ", index);
+    console.log("  ", currentIndex);
+    setQueryIndex(index);
+    console.log("  ", currentIndex);
+    setIDSearch(id);
+
+    const selectID = ApiUser?.agreementsFormat.map(({ id }) => id);
+    if (selectID) {
+      setIdList(selectID);
+    }
+
     toggleModal();
   };
 
@@ -95,20 +117,22 @@ const Table = () => {
             Acordada(s)/Resolucion(es) encontrada(s):
             {ApiUser?.contentFormat.max_size}
           </p>
-
-          <select
-            className="select outline"
-            id="Select-PageSize"
-            onChange={(e) => {
-              handleUpdatePageSize(e.currentTarget.value);
-            }}
-          >
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-          <p>{newPageSize}</p>
-          <table>
+          <div className="flex flex-row">
+            <p>Mostar</p>
+            <select
+              className="select outline"
+              id="Select-PageSize"
+              value={newPageSize}
+              onChange={(e) => {
+                handleUpdatePageSize(e.currentTarget.value);
+              }}
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <table className="max-sm:hidden max-md:hidden mt-2 pt-4 pb-2 block...">
             <thead>
               <tr>
                 <td>Número</td>
@@ -122,11 +146,16 @@ const Table = () => {
               {ApiUser?.agreementsFormat.map((ApiResult, index: number) => {
                 return (
                   <tr key={ApiResult.id}>
-                    <td>{ApiResult.agreement_number}</td>
-                    <td>{ApiResult.agreement_date.toString()}</td>
-                    <td>{ApiResult.agreement_description}</td>
+                    <td>
+                      {ApiResult.agreement_number}/{ApiResult.agreement_year}
+                    </td>
 
-                    <td>{ApiResult.agreement_year}</td>
+                    <td>{ApiResult.agreement_date.toString()}</td>
+                    <td className=" truncate overflow-hidden whitespace-nowrap">
+                      {ApiResult.agreement_description}
+                    </td>
+                    <td>{ApiResult.type_agreement.description}</td>
+
                     <td>
                       <button
                         className="btn btn-circle"
@@ -138,10 +167,14 @@ const Table = () => {
               })}
             </tbody>
           </table>
+          <Cards ApiUser={ApiUser} HandleButtonPress={HandleButtonPress} />
+          <Modal isOpen={isOpen} toggleModal={toggleModal}></Modal>
+
+          <PageNavigationButtonsBottom
+            lastPageNumber={ApiUser?.contentFormat.max_page}
+          />
         </div>
       )}
-
-      <Modal isOpen={isOpen} toggleModal={toggleModal} id={idAgreement}></Modal>
     </div>
   );
 };
