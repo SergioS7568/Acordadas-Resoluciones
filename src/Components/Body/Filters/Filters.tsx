@@ -184,24 +184,25 @@ const Filters = () => {
               {...register("final-day", { valueAsDate: true })}
               placeholder="dd/mm/yyyy"
             />
-
-            <input
-              list="type-select-options"
-              className="input outline w-full"
-              id="Tipo"
-              typeof="string"
-              placeholder="Tipos"
-              {...register("type")}
-            />
-            {getValues("type") && getValues("type")?.trim() ? (
-              <button
-                type="button"
-                className="absolute right-3 top-3 text-gray-500"
-                onClick={handleClearType}
-              >
-                ✕
-              </button>
-            ) : null}
+            <div className="relative">
+              <input
+                list="type-select-options"
+                className="input outline w-full"
+                id="Tipo"
+                typeof="string"
+                placeholder="Tipos"
+                {...register("type")}
+              />
+              {getValues("type") && getValues("type")?.trim() ? (
+                <button
+                  type="button"
+                  className="absolute right-10 top-3 text-gray-500"
+                  onClick={handleClearType}
+                >
+                  ✕
+                </button>
+              ) : null}
+            </div>
 
             <datalist id="type-select-options">
               <option value="ACORDADA" />
