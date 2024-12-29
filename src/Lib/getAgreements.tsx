@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
+
 import { agreementDetailFormatConversion } from "./agreementDetailFormatConversion";
 import { agreementsFormatConversion } from "./agreementsFormatConversion";
 
 // const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_ACORDADAS;
-
 // const BACKEND_URL_ID = import.meta.env.VITE_BACKEND_URL_ACORDADAS_ID;
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL_REALDEAL_ACORDADAS;
@@ -21,55 +21,6 @@ export const getUsersInfoFilter = async (
   queryKey: [dataForms: DataType, pageSize: number, pageIndex: number]
 ) => {
   const [dataUnfiltered, pageSize, pageIndex] = queryKey;
-
-  const dateAll = new Date();
-  const year = dateAll.getFullYear();
-  const yearwithoutTwoDigit = year.toString().substring(2);
-  const yearwithoutThreeDigit = year.toString().substring(1);
-
-  const changeNumberFormat = (text: string | null) => {
-    let wantedNumber = "";
-    const fowardSlash = text?.split("/");
-
-    if (fowardSlash && fowardSlash[0].trim().length == 2) {
-      if (
-        parseFloat(fowardSlash[0]) &&
-        parseFloat(fowardSlash[0]) <= parseFloat(yearwithoutTwoDigit)
-      ) {
-        wantedNumber += `20${fowardSlash[0]}`;
-      } else {
-        wantedNumber += `19${fowardSlash[0]}`;
-      }
-
-      return wantedNumber;
-    }
-  };
-
-  // const changeNumberFormatDayjs = (text: string | null) => {
-  //   console.log("text    ", text);
-  //   const fowardSlash = text?.split("/");
-  //   if (fowardSlash) {
-  //     const year1 = parseInt(fowardSlash[0]);
-
-  //     const year2 = dayjs(year1, "YY").format("YYYY");
-  //     console.log("year  1  ----", year1);
-  //     console.log("year  2  ----", year2);
-  //   }
-
-  //   if (fowardSlash && fowardSlash[0].trim().length == 2) {
-  //     const fullyear = dayjs(fowardSlash[0], "YY").format("YYYY");
-  //     console.log("fowardSlash    ", fowardSlash[0]);
-  //     console.log("fullyear", fullyear);
-  //     return fullyear;
-  //   }
-
-  //   if (fowardSlash && fowardSlash[0].trim().length == 4) {
-  //     const fullyear = dayjs(fowardSlash[0], "YYYY").format("YYYY");
-  //     console.log("fowardSlash    ", fowardSlash[0]);
-  //     console.log("fullyear", fullyear);
-  //     return fullyear;
-  //   }
-  // };
 
   const changeNumberFormatDayjs = (text: string | null) => {
     console.log("text    ", text);
