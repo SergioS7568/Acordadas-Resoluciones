@@ -11,11 +11,6 @@ const PageNavigationButtonsModal = () => {
   const currentIdList = useDataType((state) => state.agreementIDList);
 
   const handleIdSelection = (position: number) => {
-    console.log("position,   ", position);
-    console.log("currentIdList,   ", currentIdList);
-    console.log("currentID,   ", currentID);
-    console.log("currentIndex,   ", currentIndex);
-    console.log("currentIdList + position   ", currentIdList[position]);
     setQueryIndex(position);
     setIDSearch(currentIdList[position]);
   };

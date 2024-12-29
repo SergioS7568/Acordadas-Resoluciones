@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import validation from "../../../Lib/validation";
+import validation from "../../../Lib/Validation";
 import { useDataType } from "../../../store";
 import "./Filters.css";
 import { useState } from "react";
@@ -42,7 +42,6 @@ const Filters = () => {
   const handleClearType = () => {
     watch("type");
     setValue("type", null);
-    // Reset form value to null as well
   };
   watch("type");
   return (

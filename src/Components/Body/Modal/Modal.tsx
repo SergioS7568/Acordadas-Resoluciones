@@ -46,10 +46,9 @@ const Modal = (props: Props) => {
             agreementInformation.agreement_text,
             storedData.text
           );
-          // If rtfToDiv isn't working as expected, you could try rtf.js instead:
-          // const htmlContent = parseRtf(agreementInformation.agreement_text);
+
           const highlightedText = highlight(htmlContent, storedData.text);
-          // console.log("Parsed Text:", highlightedText);
+
           setParsedText(highlightedText);
         } catch (error) {
           alert(error);

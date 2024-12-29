@@ -47,7 +47,6 @@ export const validation = (props: Props): boolean => {
   if (dataSniffed.number?.trim() && !regex.test(dataSniffed.number.trim())) {
     alert(" number format is not valid please try again");
 
-    console.log(dataSniffed.number?.trim());
     return false;
   }
 

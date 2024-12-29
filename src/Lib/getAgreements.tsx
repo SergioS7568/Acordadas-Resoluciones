@@ -23,7 +23,6 @@ export const getUsersInfoFilter = async (
   const [dataUnfiltered, pageSize, pageIndex] = queryKey;
 
   const changeNumberFormatDayjs = (text: string | null) => {
-    console.log("text    ", text);
     if (!text) return null;
 
     const fowardSlash = text.split("/");
@@ -46,7 +45,6 @@ export const getUsersInfoFilter = async (
       }
 
       if (yearPart.length === 4) {
-        console.log("fullYear (already 4 digits):", yearPart);
         return yearPart;
       }
     }
@@ -88,15 +86,13 @@ export const getUsersInfoFilter = async (
     }
 
     if (dataUnfiltered.number && dataUnfiltered.number?.trim()) {
-      // &number=equals>1&year=equals>2020
       const numberValuePage = dataUnfiltered.number.split("/");
 
       filterSearch += `&number=equals>${numberValuePage[0]}`;
 
       if (numberValuePage[1] && numberValuePage[1].toString().trim()) {
-        // const formattedYear = changeNumberFormat(numberValuePage[1]);
         const formattedYear = changeNumberFormatDayjs(numberValuePage[1]);
-        console.log("formattedYear    ", formattedYear);
+
         filterSearch += `&year=equals>${formattedYear}`;
       }
     }

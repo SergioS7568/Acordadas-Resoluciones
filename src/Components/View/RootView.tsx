@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 import Table from "../Body/Table/Table";
 import Footer from "../Footer/Footer";
-import Forms from "../Forms/Forms";
+
 import Header from "../Header/Header";
 import CustomButton from "../Buttons/CustomButton";
+import Filters from "../Body/Filters/Filters";
 
 const RootView = () => {
   const [theme, setTheme] = useState("light");
@@ -24,7 +25,7 @@ const RootView = () => {
     <div>
       <Header />
 
-      <Forms />
+      <Filters />
       <Table />
       <Footer />
       <div className="  z-20 fixed bottom-5 right-5 gap-1 flex flex-col">

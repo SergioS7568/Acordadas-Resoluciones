@@ -22,10 +22,8 @@ const Table = () => {
   const setPageIndex = useDataType((state) => state.updatePageIndex);
   const indexPage = useDataType((state) => state.pageIndex);
 
-  // const currentID = useDataType((state) => state.agreementID);
   const setIDSearch = useDataType((state) => state.updateAgreementID);
 
-  // const currentIdList = useDataType((state) => state.agreementIDList);
   const setIdList = useDataType((state) => state.updateIdList);
 
   const {
