@@ -1,0 +1,9 @@
+.TW_FooterStyle {
+  @apply justify-items-center m-4;
+}
+.TW_FooterLabelProperties {
+  @apply text-center text-lg font-normal;
+}
+.TW_FooterLabelVersionProperties {
+  @apply text-lg font-normal text-center;
+}

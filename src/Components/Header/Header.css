@@ -1,0 +1,9 @@
+.TW_HeaderStyle {
+  @apply flex flex-col md:flex-row  mt-6 mb-6 justify-center items-center md:justify-between md:items-center  text-center  text-lg font-bold;
+}
+.TW_HeaderImageProperties {
+  @apply w-96 h-16;
+}
+.TW_HeaderTitleProperties {
+  @apply mt-6 md:mt-0;
+}
