@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import "./RootView.css";
+
 import Table from "../Body/Table/Table";
 import Footer from "../Footer/Footer";
 
@@ -22,7 +24,13 @@ const RootView = () => {
   }, [theme]);
 
   return (
-    <div>
+    <div
+      className={
+        theme === "dark"
+          ? "bg-darkBlackOption-0 dark    flex flex-col font-roboto mx-auto    min-h-screen   pr-4 pl-4  md:pr-6 md:pl-6   "
+          : " bg-grayOption-0 flex flex-col font-roboto mx-auto    min-h-screen   pr-4 pl-4  md:pr-6 md:pl-6 "
+      }
+    >
       <Header />
 
       <Filters />
