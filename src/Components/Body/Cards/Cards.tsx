@@ -1,5 +1,6 @@
 import { AgreementWantedFormat } from "../../../Lib/agreementsFormatConversion";
 import Grid from "../../../Lib/Grid";
+import CustomButton from "../../Buttons/CustomButton";
 
 interface Props {
   ApiUser: AgreementWantedFormat | undefined | null;
@@ -15,6 +16,7 @@ const Cards = (props: Props) => {
           <div
             key={ApiResult.id}
             className="flex flex-col bg-gray-100 dark:bg-darkGrayOption-0 pt-3 pb-3 pr-6 pl-6 rounded-2xl text-lg gap-4 m-4"
+            onClick={() => HandleButtonPress(ApiResult.id, index)}
           >
             <Grid container>
               <Grid item xs={12} className="flex flex-row justify-between">
@@ -26,7 +28,7 @@ const Cards = (props: Props) => {
                 </p>
               </Grid>
               <Grid item xs={12}>
-                <p className="text-start font-bold truncate overflow-hidden whitespace-nowrap ">
+                <p className="text-start pt-2 pb-1 font-bold truncate overflow-hidden whitespace-nowrap ">
                   {ApiResult.type_agreement.description}
                 </p>
               </Grid>
@@ -37,15 +39,17 @@ const Cards = (props: Props) => {
                 ></div>
               </Grid>
               <Grid item xs={12}>
-                <p className="text-start  font-normal pb-2 ">
+                <p className="text-start  pt-2 font-normal pb-2 ">
                   {ApiResult.agreement_description}
                 </p>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} className="flex justify-end">
                 <button
-                  className="btn btn-circle"
+                  className="btn btn-circle   "
                   onClick={() => HandleButtonPress(ApiResult.id, index)}
-                />
+                >
+                  <CustomButton imageName="buttons3left"></CustomButton>
+                </button>
               </Grid>
             </Grid>
           </div>

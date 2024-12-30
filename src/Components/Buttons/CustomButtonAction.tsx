@@ -1,5 +1,6 @@
 import { UseFormRegister, UseFormReset } from "react-hook-form";
 import { DataType } from "../../Lib/getAgreements";
+import CustomButton from "./CustomButton";
 
 interface Props {
   action: string;
@@ -21,8 +22,12 @@ export const CustomButtonAction = (props: Props) => {
       {
         return (
           <div>
-            <button type="submit" className="btn btn-circle bg-blue-600  ">
+            <button
+              type="submit"
+              className="btn btn-circle bg-lightBlueShift-0 text-white  w-36  h-11 md:w-64 md:h-14"
+            >
               BUSCAR
+              <CustomButton imageName="glass"></CustomButton>
             </button>
           </div>
         );
@@ -32,8 +37,11 @@ export const CustomButtonAction = (props: Props) => {
     case "reset": {
       return (
         <div>
-          <button className="btn btn-circle bg-red-600" onClick={handelReset}>
-            LIMPIAR
+          <button
+            className="btn btn-circle bg-lightgrayOption-0 text-white w-36 h-11   md:w-64 md:h-14"
+            onClick={handelReset}
+          >
+            <CustomButton imageName="trashCan"></CustomButton>LIMPIAR
           </button>
         </div>
       );

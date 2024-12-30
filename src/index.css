@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  /* -ms-overflow-style: none; for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+:root ::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+body {
+  overflow-x: hidden;
+}

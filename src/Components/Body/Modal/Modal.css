@@ -28,11 +28,6 @@
   border-radius: 1rem;
 }
 
-.signature-item {
-  border: 1px solid red; /* Just for debugging */
-  background-color: yellow; /* Just for debugging */
-}
-
 /* Barcode */
 
 .CCode {
