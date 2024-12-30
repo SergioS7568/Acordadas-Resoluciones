@@ -16,11 +16,16 @@ const PageNavigationButtonsModal = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-between items-center mt-6 pb-2">
       <div>
-        <div className="max-sm:hidden max-md:hidden">
-          <button className="btn btn-square outline">Imprimir</button>{" "}
-          <button className="btn btn-square outline"> Compartir</button>{" "}
+        <div className="max-sm:hidden max-md:hidden flex gap-4">
+          <button className="btn btn-circle outline w-52 text-lightBlueShift-0 outline-lightBlueShift-0">
+            <CustomButton imageName="printer" />
+          </button>{" "}
+          <button className="btn btn-circle outline  w-52 text-primary outline-primary">
+            {" "}
+            <CustomButton imageName="share" />
+          </button>{" "}
         </div>
 
         <div className="dropdown dropdown-top block md:hidden lg:hidden m-2">
@@ -29,18 +34,18 @@ const PageNavigationButtonsModal = () => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            className="dropdown-content menu bg-base-100 rounded-box z-[1] p-4 gap-4 w-60  shadow"
           >
             <li>
-              <a>Imprimir</a>
+              <a className="btn btn-circle outline  w-52">Imprimir</a>
             </li>
             <li>
-              <a>Compartir</a>
+              <a className="btn btn-circle outline  w-52"> Compartir</a>
             </li>
           </ul>
         </div>
       </div>
-      <div>
+      <div className="flex gap-4">
         {currentIdList.length < currentIdList[currentIndex] &&
         !(currentIndex == 0) &&
         currentID ? (
@@ -51,7 +56,7 @@ const PageNavigationButtonsModal = () => {
             <CustomButton imageName="arrowLeft" />
           </button>
         ) : (
-          <button className="btn btn-circle disabled bg-red-400">
+          <button className="btn btn-circle  btn-ghost disabled ">
             <CustomButton imageName="arrowLeft" />
           </button>
         )}
@@ -65,7 +70,7 @@ const PageNavigationButtonsModal = () => {
             <CustomButton imageName="arrowRight" />
           </button>
         ) : (
-          <button className="btn btn-circle disabled bg-red-400">
+          <button className="btn btn-circle  btn-ghost disabled  ">
             <CustomButton imageName="arrowRight" />
           </button>
         )}
