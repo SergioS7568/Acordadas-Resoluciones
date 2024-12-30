@@ -12,11 +12,13 @@ interface Props {
   dataSniffed: DataType;
 }
 
-export const validation = (props: Props): boolean => {
+export const validation = (
+  props: Props
+): { message: string; isValid: boolean } => {
   const { dataSniffed } = props;
 
   const regex =
-    /^$|^\d{1}(\/|-)\d{2,4}$|^\d{3,255}$|^\d{2,255}(\/|-)\d{1,4}$|^\d{1,255}(\/|-)\d{2,4}$|^\d{3,255}(\/|-)$/;
+    /^$|^\d{1}(\/|-)\d{2,4}$|^\d{1,255}$|^\d{1,255}(\/|-)\d{1,4}$|^\d{1,255}(\/|-)\d{2,4}$|^\d{1,255}(\/|-)$/;
 
   const schema: z.ZodType<DataType> = z.object({
     number: z.string().trim().regex(regex).nullable(),
@@ -32,60 +34,70 @@ export const validation = (props: Props): boolean => {
     dataSniffed.number &&
     (!dataSniffed.number?.trim() || dataSniffed.number?.trim().length < 1)
   ) {
-    alert("number too short ");
-    return false;
+    return {
+      message: " Número debe contener  entre 1 y 255 caracteres",
+      isValid: false,
+    };
   }
 
   if (
     dataSniffed.number &&
     (!dataSniffed.number?.trim() || dataSniffed.number?.trim().length > 255)
   ) {
-    alert("number is too big ");
-    return false;
+    return {
+      message: "Número debe contener  entre 1 y 255 caracteres",
+      isValid: false,
+    };
   }
 
   if (dataSniffed.number?.trim() && !regex.test(dataSniffed.number.trim())) {
-    alert(" number format is not valid please try again");
-
-    return false;
-  }
-
-  if (dataSniffed.number?.trim() && dataSniffed.number?.trim().length > 255) {
-    alert("number is too big");
-    return false;
+    return {
+      message: "El formato del número de acordada no es el correcto",
+      isValid: false,
+    };
   }
 
   if (
     dataSniffed.text &&
     (!dataSniffed.text?.trim() || dataSniffed.text?.trim().length < 1)
   ) {
-    alert("text is too short ");
-    return false;
+    return {
+      message: " Texto debe contener entre 3 y 255 caracteres",
+      isValid: false,
+    };
   }
 
   if (
     dataSniffed.text &&
     (!dataSniffed.text?.trim() || dataSniffed.text?.trim().length > 255)
   ) {
-    alert("text is too big ");
-    return false;
+    return {
+      message: "Texto debe contener entre 3 y 255 caracteres",
+      isValid: false,
+    };
   }
 
   if (dataSniffed["final-day"] && dataSniffed["init-date"]) {
     if (dataSniffed["final-day"] < dataSniffed["init-date"]) {
-      alert(". end date cannot be shorter than starting date");
-      return false;
+      return {
+        message: "Rango de Fecha es invalido",
+        isValid: false,
+      };
     }
   }
 
   if (dataSniffed["final-day"] && !dataSniffed["init-date"]) {
-    alert("start date is required ");
-    return false;
+    return {
+      message: `Para buscar por fecha, debe ingresar también "Fecha desde"`,
+      isValid: false,
+    };
   }
 
   if (!dataSniffed["final-day"] && dataSniffed["init-date"]) {
-    alert("end date is required ");
-    return false;
+    return {
+      message: `Para buscar por fecha, debe ingresar también "Fecha hasta"`,
+      isValid: false,
+    };
   }
 
   if (
@@ -97,14 +109,18 @@ export const validation = (props: Props): boolean => {
       (dataSniffed["final-day"] && dataSniffed["init-date"])
     )
   ) {
-    alert("please fill another input");
-    return false;
+    return {
+      message: "Para buscar por tipo, debe ingresar también otro campo",
+      isValid: false,
+    };
   }
 
   if (!result.success) {
-    console.log("Validation failed:", result.error.format());
-    return false;
+    return {
+      message: `Algo salio mal: ${result.error.format()}`,
+      isValid: false,
+    };
   }
-  return true;
+  return { message: "", isValid: true };
 };
 export default validation;
