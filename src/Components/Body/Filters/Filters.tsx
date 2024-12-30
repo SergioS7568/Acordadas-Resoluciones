@@ -5,6 +5,9 @@ import { useDataType } from "../../../store";
 import "./Filters.css";
 import { useState } from "react";
 import CustomButtonAction from "../../Buttons/CustomButtonAction";
+import CustomButton from "../../Buttons/CustomButton";
+import Grid from "../../../Lib/Grid";
+import ModalAlert from "../Modal/ModalAlert";
 
 export interface DataType {
   number: string | null;
@@ -30,9 +33,20 @@ const Filters = () => {
   const setPageIndex = useDataType((state) => state.updatePageIndex);
   const [isFormVisible, setFormVisible] = useState(false);
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
+
   const handleOnSubmit = (data: DataType) => {
-    const isValid = validation({ dataSniffed: data });
-    if (!isValid) {
+    const validationResult = validation({ dataSniffed: data });
+
+    if (validationResult && !validationResult.isValid) {
+      setErrorMessage(validationResult.message);
+      setModalOpen(true);
+
       return;
     }
     setPageIndex(0);
@@ -52,29 +66,26 @@ const Filters = () => {
       >
         <div className="  flex flex-col lg:flex-row justify-center items-center gap-4 ">
           <div className="flex flex-col    text-sm font-medium  ">
-            <label>numero</label>
             <input
-              className="input outline w-96 md:w-60 "
+              className="input outline  md:w-[20rem] bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit "
               id="Numero"
               {...register("number")}
               placeholder="Número"
             />
           </div>
-          <div className=" flex flex-row gap-4">
-            <div className="flex flex-col    text-sm font-medium  ">
-              <label>Fecha Inicial</label>
+          <div className=" flex  flex-row   gap-4">
+            <div className=" text-sm font-medium  ">
               <input
-                className="input outline   w-60"
+                className="input outline   w-[20rem] bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
                 type="date"
                 id="init-date"
                 {...register("init-date", { valueAsDate: true })}
                 placeholder="dd/mm/yyyy”"
               />
             </div>
-            <div className="flex flex-col    text-sm font-medium  ">
-              <label>Fecha Final</label>
+            <div className="    text-sm font-medium  ">
               <input
-                className="input outline   w-60 "
+                className="input outline   w-[20rem] bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit "
                 type="date"
                 id="final-day"
                 {...register("final-day", { valueAsDate: true })}
@@ -88,19 +99,18 @@ const Filters = () => {
           <div className="flex flex-col    text-sm font-medium  ">
             <label>Texto</label>
             <input
-              className="input outline  w-60 "
+              className="input outline  w-[41rem] bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit "
               id="Texto"
               type="text"
               {...register("text")}
               placeholder="Texto"
             />
           </div>
-          <div className="flex flex-col    text-sm font-medium relative  ">
-            <label>Tipo</label>
+          <div className="flex flex-col  mt-5  text-sm font-medium relative  ">
             <div className="relative ">
               <input
                 list="type-select-options"
-                className=" input outline w-60 "
+                className=" input outline w-[20rem]  bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
                 id="Tipo"
                 typeof="string"
                 placeholder="Tipos"
@@ -109,10 +119,10 @@ const Filters = () => {
               {getValues("type") && getValues("type")?.trim() ? (
                 <button
                   type="button"
-                  className=" absolute right-10 top-3   text-gray-500"
+                  className=" absolute right-10 top-4  "
                   onClick={handleClearType}
                 >
-                  ✕
+                  <CustomButton imageName="xcircle" />
                 </button>
               ) : (
                 <button
@@ -128,24 +138,38 @@ const Filters = () => {
             </datalist>
           </div>
         </div>
-        <div className="flex flex-row justify-center gap-4">
-          <CustomButtonAction
-            action={"submit"}
-            reset={null}
-            register={register}
-          />
-          <CustomButtonAction action={"reset"} reset={reset} register={null} />
-        </div>
+        <Grid container className="p-4 ">
+          <Grid item xs={5} className="  flex justify-end">
+            <CustomButtonAction
+              action={"reset"}
+              reset={reset}
+              register={null}
+            />
+          </Grid>
+          <Grid item xs={2} className=" flex justify-center "></Grid>
+          <Grid item xs={5} className=" flex justify-start ">
+            <CustomButtonAction
+              action={"submit"}
+              reset={null}
+              register={register}
+            />
+          </Grid>
+        </Grid>
       </form>
 
       <div className="block md:hidden  ">
-        <div className="flex col justify-center">
+        <div className="flex  justify-center">
           <button
             type="button"
-            className="btn  outline input m-2  "
+            className="btn btn-ghost   min-w-80  input m-2    "
             onClick={() => setFormVisible(!isFormVisible)}
           >
-            {isFormVisible ? " Filtros de búsqueda X" : "Filtros de búsqueda O"}
+            <span>Filtros de búsqueda</span>
+            {isFormVisible ? (
+              <CustomButton imageName="arrowUp" />
+            ) : (
+              <CustomButton imageName="arrowDown" />
+            )}
           </button>
         </div>
         {isFormVisible && (
@@ -154,14 +178,14 @@ const Filters = () => {
             className=" flex flex-col m-2 p-4  rounded shadow-md gap-4"
           >
             <input
-              className="input outline w-full"
+              className="input outline w-full bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
               id="Numero"
               {...register("number")}
               placeholder="Número"
             />
 
             <input
-              className="input outline w-full"
+              className="input outline w-full bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
               id="Texto"
               type="text"
               {...register("text")}
@@ -169,7 +193,7 @@ const Filters = () => {
             />
 
             <input
-              className="input outline w-full"
+              className="input outline w-full bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
               type="date"
               id="init-date"
               {...register("init-date", { valueAsDate: true })}
@@ -177,7 +201,7 @@ const Filters = () => {
             />
 
             <input
-              className="input outline w-full"
+              className="input outline w-full bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
               type="date"
               id="final-day"
               {...register("final-day", { valueAsDate: true })}
@@ -186,7 +210,7 @@ const Filters = () => {
             <div className="relative">
               <input
                 list="type-select-options"
-                className="input outline w-full"
+                className="input outline w-full bg-transparent focus:bg-transparent   outline-darkgrayOption-0 outline-1    hover:text-inherit"
                 id="Tipo"
                 typeof="string"
                 placeholder="Tipos"
@@ -195,10 +219,10 @@ const Filters = () => {
               {getValues("type") && getValues("type")?.trim() ? (
                 <button
                   type="button"
-                  className="absolute right-10 top-3 text-gray-500"
+                  className="absolute right-10 top-4 text-gray-500"
                   onClick={handleClearType}
                 >
-                  ✕
+                  <CustomButton imageName="xcircle" />
                 </button>
               ) : null}
             </div>
@@ -209,21 +233,24 @@ const Filters = () => {
               <option value="RESOLUCION DE FERIA" />
             </datalist>
 
-            <div className="flex flex-row justify-center gap-4">
-              <CustomButtonAction
-                action={"submit"}
-                reset={null}
-                register={register}
-              />
+            <div className="flex flex-row  gap-4  ">
               <CustomButtonAction
                 action={"reset"}
                 reset={reset}
                 register={null}
               />
+              <CustomButtonAction
+                action={"submit"}
+                reset={null}
+                register={register}
+              />
             </div>
           </form>
         )}
       </div>
+      {isModalOpen && (
+        <ModalAlert error={errorMessage} toggleModal={toggleModal} />
+      )}
     </>
   );
 };
